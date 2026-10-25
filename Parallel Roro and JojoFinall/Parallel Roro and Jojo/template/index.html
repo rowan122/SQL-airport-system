@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parallel Data Processing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        .task-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Parallel Data Processing App</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="task">Select Task:</label>
+        <select name="task" id="task" required onchange="toggleTaskInputs()">
+            <option value="">--Choose a Task--</option>
+            <option value="1">1. Sorting Numbers</option>
+            <option value="2">2. File Processing</option>
+            <option value="3">3. Image Filtering</option>
+            <option value="4">4. Machine Learning</option>
+            <option value="5">5. Text Search</option>
+            <option value="6">6. Statistics</option>
+            <option value="7">7. Matrix Multiplication (Manual Input)</option>
+        </select>
+
+        <label for="processes">Number of Processes:</label>
+        <input type="number" name="processes" min="1" required>
+
+        <div id="task1" class="task-section">
+            <label>Enter numbers (comma-separated):</label>
+            <input type="text" name="numbers" placeholder="e.g. 5,2,9,1">
+        </div>
+
+        <div id="task3" class="task-section">
+            <label>Select Filter:</label>
+            <select name="filter">
+                <option value="blur">Blur</option>
+                <option value="sharpen">Sharpen</option>
+                <option value="edge">Edge Detection</option>
+            </select>
+        </div>
+
+        <div id="task5" class="task-section">
+            <label>Enter keyword to search:</label>
+            <input type="text" name="keyword" placeholder="e.g. data">
+        </div>
+
+        <div id="task7" class="task-section">
+            <label>A Matrix Rows:</label>
+            <input type="number" name="a_rows" min="1">
+            <label>A Matrix Columns:</label>
+            <input type="number" name="a_cols" min="1">
+
+            <label>B Matrix Rows:</label>
+            <input type="number" name="b_rows" min="1">
+            <label>B Matrix Columns:</label>
+            <input type="number" name="b_cols" min="1">
+
+            <label>A Matrix Values (comma-separated):</label>
+            <input type="text" name="a_values" placeholder="e.g. 1,2,3,4">
+            <label>B Matrix Values (comma-separated):</label>
+            <input type="text" name="b_values" placeholder="e.g. 5,6,7,8">
+        </div>
+
+        <label>Upload file (for tasks like 2, 3, 4, 5, 6):</label>
+        <input type="file" name="file">
+
+        <button type="submit">Run Task</button>
+    </form>
+
+    <h2>Output:</h2>
+    <pre>{{ output }}</pre>
+</div>
+
+<script>
+    function toggleTaskInputs() {
+        const selectedTask = document.getElementById("task").value;
+        const sections = ["task1", "task3", "task5", "task7"];
+        sections.forEach(id => {
+            document.getElementById(id).style.display = "none";
+        });
+        if (selectedTask && document.getElementById("task" + selectedTask)) {
+            document.getElementById("task" + selectedTask).style.display = "block";
+        }
+    }
+    window.onload = toggleTaskInputs;
+</script>
+</body>
+</html>
